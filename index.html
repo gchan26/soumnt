@@ -2,58 +2,99 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
-  <title>SOUMNT - Seus vídeos em instantes</title>
-  <style>
-    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 24px; }
-    .row { display: flex; gap: 8px; align-items: center; margin-bottom: 12px; }
-    input[type="text"] { flex: 1; padding: 8px; }
-    button { padding: 8px 12px; cursor: pointer; }
-    #log { height: 220px; overflow: auto; white-space: pre-wrap; background: #111; color: #ddd; padding: 8px; border-radius: 6px; }
-    progress { width: 100%; height: 20px; }
-    label { min-width: 80px; font-weight: 600; }
-    .status { margin: 6px 0; font-weight: 600; }
-    small { color: #666; }
-  </style>
+  <title>SOUMNT! - Seus vídeos em um minuto</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <h1>SOUMNT - Baixador de vídeos</h1>
+  <h1>SOUMNT! - Baixador de vídeos</h1>
 
   <div class="row">
     <label for="url">URL:</label>
     <input id="url" type="text" placeholder="https://www.youtube.com/watch?v=..." />
+    <button id="paste">
+      <span class="icon">📋</span>
+      Colar
+    </button>
   </div>
 
   <div class="row">
     <label for="outDir">Pasta:</label>
     <input id="outDir" type="text" placeholder="Escolha uma pasta de destino" readonly />
-    <button id="choose">Escolher…</button>
+    <button id="choose">
+      <span class="icon">📁</span>
+      Escolher…
+    </button>
   </div>
 
   <div class="row">
     <label for="format">Formato:</label>
-    <input id="format" type="text" placeholder="Ex.: bestvideo+bestaudio/best (opcional)" />
+    <select id="format">
+      <option value="">Melhor qualidade disponível</option>
+      <option value="best[height<=720]">720p ou menor</option>
+      <option value="best[height<=480]">480p ou menor</option>
+      <option value="best[height<=360]">360p ou menor</option>
+      <option value="bestaudio">Apenas áudio (melhor qualidade)</option>
+      <option value="worst">Menor tamanho de arquivo</option>
+      <option value="bestvideo+bestaudio/best">Melhor vídeo + áudio</option>
+    </select>
   </div>
 
-  <div class="row">
-    <button id="download">Baixar</button>
-    <div class="status" id="status"></div>
+  <div class="row download-row">
+    <button id="download">
+      <span class="icon">⬇️</span>
+      Baixar
+    </button>
   </div>
+
+  <div class="status" id="status"></div>
 
   <progress id="progress" value="0" max="100"></progress>
-  <p><small>Dica: instale <code>yt-dlp</code> e <code>ffmpeg</code> no sistema e mantenha no PATH.</small></p>
+  <p><small>Obs: apenas baixamos vídeos do <code>YouTube</code>, nada de <code>X</code> ou <code>Instagram</code> por enquanto... Quando que será lançada a atualização? Hahahaha SOUMNT!</small></p>
 
-  <h3>Log</h3>
-  <div id="log"></div>
+  <div class="row logs-row">
+    <button id="toggleLogs">
+      <span class="icon">🤓</span>
+      Mostrar Logs
+    </button>
+  </div>
+
+  <div class="logs-section hidden">
+    <h3>Log</h3>
+    <div id="log"></div>
+  </div>
 
   <script>
     const $ = (id) => document.getElementById(id);
     const statusEl = $("status");
     const logEl = $("log");
     const progress = $("progress");
+    const logsSection = document.querySelector('.logs-section');
+    const toggleLogsBtn = $("toggleLogs");
+    let logsVisible = false;
 
     $("choose").addEventListener("click", async () => {
       const dir = await window.electronAPI.chooseFolder();
       if (dir) $("outDir").value = dir;
+    });
+
+    $("paste").addEventListener("click", async () => {
+      try {
+        const text = await navigator.clipboard.readText();
+        $("url").value = text.trim();
+      } catch (err) {
+        console.error('Erro ao colar:', err);
+      }
+    });
+
+    toggleLogsBtn.addEventListener("click", () => {
+      logsVisible = !logsVisible;
+      if (logsVisible) {
+        logsSection.classList.remove('hidden');
+        toggleLogsBtn.innerHTML = '<span class="icon">🤓</span> Ocultar Logs';
+      } else {
+        logsSection.classList.add('hidden');
+        toggleLogsBtn.innerHTML = '<span class="icon">🤓</span> Mostrar Logs';
+      }
     });
 
     $("download").addEventListener("click", async () => {

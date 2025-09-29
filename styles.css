@@ -1,0 +1,250 @@
+:root {
+  --ctp-base: #1e1e2e;
+  --ctp-mantle: #181825;
+  --ctp-crust: #11111b;
+  --ctp-surface0: #313244;
+  --ctp-surface1: #45475a;
+  --ctp-surface2: #585b70;
+  --ctp-overlay0: #6c7086;
+  --ctp-overlay1: #7f849c;
+  --ctp-overlay2: #9399b2;
+  --ctp-subtext0: #a6adc8;
+  --ctp-subtext1: #bac2de;
+  --ctp-text: #cdd6f4;
+  --ctp-lavender: #b4befe;
+  --ctp-blue: #89b4fa;
+  --ctp-sapphire: #74c7ec;
+  --ctp-sky: #89dceb;
+  --ctp-teal: #94e2d5;
+  --ctp-green: #a6e3a1;
+  --ctp-yellow: #f9e2af;
+  --ctp-peach: #fab387;
+  --ctp-maroon: #eba0ac;
+  --ctp-red: #f38ba8;
+  --ctp-mauve: #cba6f7;
+  --ctp-pink: #f5c2e7;
+  --ctp-flamingo: #f2cdcd;
+  --ctp-rosewater: #f5e0dc;
+}
+
+body {
+  font-family: 'JetBrains Mono', 'Fira Code', Consolas, 'Courier New', monospace;
+  margin: 24px;
+  background-color: var(--ctp-base);
+  color: var(--ctp-text);
+  line-height: 1.6;
+}
+
+h1 {
+  color: var(--ctp-mauve);
+  font-weight: 700;
+  margin-bottom: 24px;
+  font-size: 28px;
+}
+
+h3 {
+  color: var(--ctp-blue);
+  font-weight: 600;
+  margin-top: 24px;
+  margin-bottom: 12px;
+}
+
+.row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.row.download-row {
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.row.logs-row {
+  justify-content: flex-end;
+  margin-top: 24px;
+}
+
+input[type="text"] {
+  flex: 1;
+  padding: 12px 16px;
+  background-color: var(--ctp-surface0);
+  border: 2px solid var(--ctp-surface1);
+  border-radius: 8px;
+  color: var(--ctp-text);
+  font-family: inherit;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+input[type="text"]:focus {
+  outline: none;
+  border-color: var(--ctp-blue);
+  box-shadow: 0 0 0 3px rgba(137, 180, 250, 0.15);
+}
+
+input[type="text"]::placeholder {
+  color: var(--ctp-overlay1);
+}
+
+select {
+  flex: 1;
+  padding: 12px 16px;
+  background-color: var(--ctp-surface0);
+  border: 2px solid var(--ctp-surface1);
+  border-radius: 8px;
+  color: var(--ctp-text);
+  font-family: inherit;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+select:focus {
+  outline: none;
+  border-color: var(--ctp-blue);
+  box-shadow: 0 0 0 3px rgba(137, 180, 250, 0.15);
+}
+
+select option {
+  background-color: var(--ctp-surface0);
+  color: var(--ctp-text);
+  padding: 8px;
+}
+
+button {
+  padding: 12px 20px;
+  cursor: pointer;
+  background-color: var(--ctp-blue);
+  border: none;
+  border-radius: 8px;
+  color: var(--ctp-base);
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+button:hover {
+  background-color: var(--ctp-sapphire);
+  transform: translateY(-1px);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+#download {
+  background-color: var(--ctp-green);
+  color: var(--ctp-base);
+  padding: 16px 32px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+#download:hover {
+  background-color: var(--ctp-teal);
+}
+
+#paste {
+  background-color: var(--ctp-lavender);
+  color: var(--ctp-base);
+}
+
+#paste:hover {
+  background-color: var(--ctp-mauve);
+}
+
+#toggleLogs {
+  background-color: var(--ctp-yellow);
+  color: var(--ctp-base);
+  margin-bottom: 16px;
+}
+
+#toggleLogs:hover {
+  background-color: var(--ctp-peach);
+}
+
+.logs-section {
+  margin-top: 24px;
+}
+
+.logs-section.hidden {
+  display: none;
+}
+
+#log {
+  height: 220px;
+  overflow: auto;
+  white-space: pre-wrap;
+  background-color: var(--ctp-mantle);
+  color: var(--ctp-text);
+  padding: 16px;
+  border-radius: 12px;
+  border: 2px solid var(--ctp-surface0);
+  font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+progress {
+  width: 100%;
+  height: 24px;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: var(--ctp-surface0);
+  border: none;
+  margin: 16px 0;
+}
+
+progress::-webkit-progress-bar {
+  background-color: var(--ctp-surface0);
+  border-radius: 12px;
+}
+
+progress::-webkit-progress-value {
+  background: linear-gradient(90deg, var(--ctp-green), var(--ctp-teal));
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+progress::-moz-progress-bar {
+  background: linear-gradient(90deg, var(--ctp-green), var(--ctp-teal));
+  border-radius: 12px;
+}
+
+label {
+  min-width: 80px;
+  font-weight: 600;
+  color: var(--ctp-subtext1);
+  font-size: 14px;
+}
+
+.status {
+  margin: 6px 0;
+  font-weight: 600;
+  color: var(--ctp-blue);
+  font-size: 14px;
+}
+
+small {
+  color: var(--ctp-overlay1);
+  font-size: 13px;
+}
+
+code {
+  background-color: var(--ctp-surface0);
+  color: var(--ctp-peach);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: inherit;
+}
+
+.icon {
+  font-size: 16px;
+  line-height: 1;
+}
