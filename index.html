@@ -9,6 +9,36 @@
   <div class="header">
     <img src="logo-soumnt.png" alt="SOUMNT Logo" class="logo" />
     <h1>SOUMNT! - Baixador de vídeos</h1>
+    <button id="settings" class="settings-btn">
+      <span class="icon">⚙️</span>
+    </button>
+  </div>
+
+  <div id="settingsModal" class="settings-modal hidden">
+    <div class="settings-content">
+      <h3>Configurações</h3>
+      
+      <div class="setting-row">
+        <label for="language">Idioma:</label>
+        <select id="language">
+          <option value="pt">Português</option>
+          <option value="en">English</option>
+        </select>
+      </div>
+
+      <div class="setting-row">
+        <label for="theme">Tema:</label>
+        <select id="theme">
+          <option value="catppuccin">Default</option>
+          <option value="matrix">Matrix</option>
+          <option value="light">Light</option>
+        </select>
+      </div>
+
+      <div class="settings-buttons">
+        <button id="closeSettings">Fechar</button>
+      </div>
+    </div>
   </div>
 
   <div class="row">
@@ -73,7 +103,147 @@
     const progress = $("progress");
     const logsSection = document.querySelector('.logs-section');
     const toggleLogsBtn = $("toggleLogs");
+    const settingsModal = $("settingsModal");
+    const settingsBtn = $("settings");
+    const closeSettingsBtn = $("closeSettings");
+    const themeSelect = $("theme");
+    const languageSelect = $("language");
     let logsVisible = false;
+
+    const translations = {
+      pt: {
+        title: "SOUMNT! - Baixador de vídeos",
+        url: "URL:",
+        folder: "Pasta:",
+        format: "Formato:",
+        download: "Baixar",
+        showLogs: "Mostrar Logs",
+        hideLogs: "Ocultar Logs",
+        settings: "Configurações",
+        language: "Idioma:",
+        theme: "Tema:",
+        close: "Fechar",
+        urlPlaceholder: "https://www.youtube.com/watch?v=...",
+        folderPlaceholder: "Escolha uma pasta de destino",
+        choose: "Escolher…",
+        paste: "Colar",
+        bestQuality: "Melhor qualidade disponível",
+        q720: "720p ou menor",
+        q480: "480p ou menor", 
+        q360: "360p ou menor",
+        audioOnly: "Apenas áudio (melhor qualidade)",
+        smallest: "Menor tamanho de arquivo",
+        bestVideo: "Melhor vídeo + áudio",
+        downloading: "Baixando…",
+        completed: "Concluído ✅",
+        failed: "Falhou ❌",
+        urlError: "Informe a URL do vídeo.",
+        folderError: "Escolha a pasta de destino.",
+        note: "Obs: apenas baixamos vídeos do YouTube, nada de X ou Instagram por enquanto... Quando que será lançada a atualização? Hahahaha SOUMNT!"
+      },
+      en: {
+        title: "SOUMNT!(Just a Minute!) - Video Downloader",
+        url: "URL:",
+        folder: "Folder:",
+        format: "Format:",
+        download: "Download",
+        showLogs: "Show Logs",
+        hideLogs: "Hide Logs", 
+        settings: "Settings",
+        language: "Language:",
+        theme: "Theme:",
+        close: "Close",
+        urlPlaceholder: "https://www.youtube.com/watch?v=...",
+        folderPlaceholder: "Choose a destination folder",
+        choose: "Choose…",
+        paste: "Paste",
+        bestQuality: "Best quality available",
+        q720: "720p or lower",
+        q480: "480p or lower",
+        q360: "360p or lower", 
+        audioOnly: "Audio only (best quality)",
+        smallest: "Smallest file size",
+        bestVideo: "Best video + audio",
+        downloading: "Downloading…",
+        completed: "Completed ✅",
+        failed: "Failed ❌",
+        urlError: "Please enter the video URL.",
+        folderError: "Please choose a destination folder.",
+        note: "Note: we only download YouTube videos, no X or Instagram for now... When will the update be released? Hahahaha JUSTAMINUTE!"
+      }
+    };
+
+    let currentLang = 'pt';
+
+    function updateTexts() {
+      const t = translations[currentLang];
+      document.title = t.title;
+      document.querySelector('h1').textContent = t.title;
+      document.querySelector('label[for="url"]').textContent = t.url;
+      document.querySelector('label[for="outDir"]').textContent = t.folder;
+      document.querySelector('label[for="format"]').textContent = t.format;
+      $("url").placeholder = t.urlPlaceholder;
+      $("outDir").placeholder = t.folderPlaceholder;
+      $("choose").innerHTML = `<span class="icon">📁</span> ${t.choose}`;
+      $("paste").innerHTML = `<span class="icon">📋</span> ${t.paste}`;
+      $("download").innerHTML = `<span class="icon">⬇️</span> ${t.download}`;
+      
+      const formatOptions = $("format").options;
+      formatOptions[0].textContent = t.bestQuality;
+      formatOptions[1].textContent = t.q720;
+      formatOptions[2].textContent = t.q480;
+      formatOptions[3].textContent = t.q360;
+      formatOptions[4].textContent = t.audioOnly;
+      formatOptions[5].textContent = t.smallest;
+      formatOptions[6].textContent = t.bestVideo;
+
+      if (!logsVisible) {
+        toggleLogsBtn.innerHTML = `<span class="icon">🤓</span> ${t.showLogs}`;
+      } else {
+        toggleLogsBtn.innerHTML = `<span class="icon">🤓</span> ${t.hideLogs}`;
+      }
+
+      document.querySelector('.settings-content h3').textContent = t.settings;
+      document.querySelector('.setting-row label[for="language"]').textContent = t.language;
+      document.querySelector('.setting-row label[for="theme"]').textContent = t.theme;
+      closeSettingsBtn.textContent = t.close;
+      document.querySelector('small').innerHTML = t.note.replace(/`([^`]+)`/g, '<code>$1</code>');
+    }
+
+    settingsBtn.addEventListener("click", () => {
+      settingsModal.classList.remove('hidden');
+    });
+
+    closeSettingsBtn.addEventListener("click", () => {
+      settingsModal.classList.add('hidden');
+    });
+
+    settingsModal.addEventListener("click", (e) => {
+      if (e.target === settingsModal) {
+        settingsModal.classList.add('hidden');
+      }
+    });
+
+    themeSelect.addEventListener("change", () => {
+      document.documentElement.setAttribute('data-theme', themeSelect.value);
+      localStorage.setItem('theme', themeSelect.value);
+    });
+
+    languageSelect.addEventListener("change", () => {
+      currentLang = languageSelect.value;
+      localStorage.setItem('language', currentLang);
+      updateTexts();
+    });
+
+    const savedTheme = localStorage.getItem('theme') || 'catppuccin';
+    const savedLang = localStorage.getItem('language') || 'pt';
+    
+    themeSelect.value = savedTheme;
+    languageSelect.value = savedLang;
+    currentLang = savedLang;
+    
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    updateTexts();
 
     $("choose").addEventListener("click", async () => {
       const dir = await window.electronAPI.chooseFolder();
@@ -90,34 +260,36 @@
     });
 
     toggleLogsBtn.addEventListener("click", () => {
+      const t = translations[currentLang];
       logsVisible = !logsVisible;
       if (logsVisible) {
         logsSection.classList.remove('hidden');
-        toggleLogsBtn.innerHTML = '<span class="icon">🤓</span> Ocultar Logs';
+        toggleLogsBtn.innerHTML = `<span class="icon">🤓</span> ${t.hideLogs}`;
       } else {
         logsSection.classList.add('hidden');
-        toggleLogsBtn.innerHTML = '<span class="icon">🤓</span> Mostrar Logs';
+        toggleLogsBtn.innerHTML = `<span class="icon">🤓</span> ${t.showLogs}`;
       }
     });
 
     $("download").addEventListener("click", async () => {
+      const t = translations[currentLang];
       const url = $("url").value.trim();
       const outDir = $("outDir").value.trim();
       const format = $("format").value.trim();
 
-      if (!url)  return alert("Informe a URL do vídeo.");
-      if (!outDir) return alert("Escolha a pasta de destino.");
+      if (!url) return alert(t.urlError);
+      if (!outDir) return alert(t.folderError);
 
       progress.value = 0;
-      statusEl.textContent = "Baixando…";
+      statusEl.textContent = t.downloading;
       logEl.textContent = "";
 
       try {
         await window.electronAPI.startDownload({ url, outDir, format });
-        statusEl.textContent = "Concluído ✅";
+        statusEl.textContent = t.completed;
         progress.value = 100;
       } catch (err) {
-        statusEl.textContent = "Falhou ❌";
+        statusEl.textContent = t.failed;
         logEl.textContent += "\nErro: " + err.message;
       }
     });

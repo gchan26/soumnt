@@ -27,6 +27,64 @@
   --ctp-rosewater: #f5e0dc;
 }
 
+:root[data-theme="matrix"] {
+  --ctp-base: #000000;
+  --ctp-mantle: #0a0a0a;
+  --ctp-crust: #000000;
+  --ctp-surface0: #001100;
+  --ctp-surface1: #002200;
+  --ctp-surface2: #003300;
+  --ctp-overlay0: #004400;
+  --ctp-overlay1: #005500;
+  --ctp-overlay2: #006600;
+  --ctp-subtext0: #00aa00;
+  --ctp-subtext1: #00cc00;
+  --ctp-text: #00ff00;
+  --ctp-lavender: #00ff00;
+  --ctp-blue: #00ff00;
+  --ctp-sapphire: #00dd00;
+  --ctp-sky: #00dd00;
+  --ctp-teal: #00dd00;
+  --ctp-green: #00ff00;
+  --ctp-yellow: #00ff00;
+  --ctp-peach: #00dd00;
+  --ctp-maroon: #00aa00;
+  --ctp-red: #00ff00;
+  --ctp-mauve: #00ff00;
+  --ctp-pink: #00dd00;
+  --ctp-flamingo: #00cc00;
+  --ctp-rosewater: #00aa00;
+}
+
+:root[data-theme="light"] {
+  --ctp-base: #ffffff;
+  --ctp-mantle: #f5f5f5;
+  --ctp-crust: #eeeeee;
+  --ctp-surface0: #e0e0e0;
+  --ctp-surface1: #d0d0d0;
+  --ctp-surface2: #c0c0c0;
+  --ctp-overlay0: #b0b0b0;
+  --ctp-overlay1: #a0a0a0;
+  --ctp-overlay2: #909090;
+  --ctp-subtext0: #606060;
+  --ctp-subtext1: #404040;
+  --ctp-text: #202020;
+  --ctp-lavender: #7c3aed;
+  --ctp-blue: #3b82f6;
+  --ctp-sapphire: #0ea5e9;
+  --ctp-sky: #0891b2;
+  --ctp-teal: #14b8a6;
+  --ctp-green: #22c55e;
+  --ctp-yellow: #eab308;
+  --ctp-peach: #f97316;
+  --ctp-maroon: #e11d48;
+  --ctp-red: #ef4444;
+  --ctp-mauve: #a855f7;
+  --ctp-pink: #ec4899;
+  --ctp-flamingo: #f43f5e;
+  --ctp-rosewater: #fb7185;
+}
+
 body {
   font-family: 'JetBrains Mono', 'Fira Code', Consolas, 'Courier New', monospace;
   margin: 24px;
@@ -48,6 +106,62 @@ h1 {
   align-items: center;
   gap: 12px;
   margin-bottom: 24px;
+  justify-content: space-between;
+}
+
+.settings-btn {
+  background-color: var(--ctp-surface0);
+  padding: 8px;
+  border-radius: 50%;
+  min-width: auto;
+}
+
+.settings-btn:hover {
+  background-color: var(--ctp-surface1);
+}
+
+.settings-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.settings-modal.hidden {
+  display: none;
+}
+
+.settings-content {
+  background-color: var(--ctp-base);
+  border: 2px solid var(--ctp-surface1);
+  border-radius: 12px;
+  padding: 24px;
+  min-width: 300px;
+  max-width: 400px;
+}
+
+.setting-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.setting-row label {
+  min-width: 80px;
+}
+
+.settings-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
 }
 
 .logo {
