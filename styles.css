@@ -40,6 +40,19 @@ h1 {
   font-weight: 700;
   margin-bottom: 24px;
   font-size: 28px;
+  margin: 0;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.logo {
+  height: 3em;
+  width: auto;
 }
 
 h3 {
