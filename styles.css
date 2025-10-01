@@ -122,8 +122,8 @@ body {
   line-height: 1.6;
 }
 
-body[data-theme="guic"] {
-  background-image: url('./assets/bliss.jpeg');
+[data-theme="guic"] body {
+  background-image: url('./assets/bliss.png');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
