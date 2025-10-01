@@ -85,12 +85,60 @@
   --ctp-rosewater: #fb7185;
 }
 
+:root[data-theme="guic"] {
+  --ctp-base: rgba(0, 0, 0, 0.1);
+  --ctp-mantle: rgba(255, 255, 255, 0.15);
+  --ctp-crust: rgba(255, 255, 255, 0.1);
+  --ctp-surface0: rgba(255, 255, 255, 0.2);
+  --ctp-surface1: rgba(255, 255, 255, 0.25);
+  --ctp-surface2: rgba(255, 255, 255, 0.3);
+  --ctp-overlay0: rgba(255, 255, 255, 0.35);
+  --ctp-overlay1: rgba(255, 255, 255, 0.45);
+  --ctp-overlay2: rgba(255, 255, 255, 0.55);
+  --ctp-subtext0: rgba(255, 255, 255, 0.95);
+  --ctp-subtext1: rgba(255, 255, 255, 0.98);
+  --ctp-text: #ffffff;
+  --ctp-lavender: #b4befe;
+  --ctp-blue: #89b4fa;
+  --ctp-sapphire: #74c7ec;
+  --ctp-sky: #89dceb;
+  --ctp-teal: #94e2d5;
+  --ctp-green: #a6e3a1;
+  --ctp-yellow: #f9e2af;
+  --ctp-peach: #fab387;
+  --ctp-maroon: #eba0ac;
+  --ctp-red: #f38ba8;
+  --ctp-mauve: #cba6f7;
+  --ctp-pink: #f5c2e7;
+  --ctp-flamingo: #f2cdcd;
+  --ctp-rosewater: #f5e0dc;
+}
+
 body {
   font-family: 'JetBrains Mono', 'Fira Code', Consolas, 'Courier New', monospace;
   margin: 24px;
   background-color: var(--ctp-base);
   color: var(--ctp-text);
   line-height: 1.6;
+}
+
+body[data-theme="guic"] {
+  background-image: url('./assets/bliss.jpeg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  color: #ffffff;
+}
+
+[data-theme="guic"] h1 {
+  color: #ffffff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+[data-theme="guic"] label {
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 h1 {
@@ -146,6 +194,14 @@ h1 {
   max-width: 400px;
 }
 
+[data-theme="guic"] .settings-content {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  color: #ffffff;
+}
+
 .setting-row {
   display: flex;
   align-items: center;
@@ -155,6 +211,12 @@ h1 {
 
 .setting-row label {
   min-width: 80px;
+}
+
+[data-theme="guic"] .setting-row label {
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  font-weight: 500;
 }
 
 .settings-buttons {
@@ -205,6 +267,21 @@ input[type="text"] {
   transition: all 0.3s ease;
 }
 
+[data-theme="guic"] input[type="text"] {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  color: #ffffff;
+}
+
+[data-theme="guic"] input[type="text"]:focus {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  color: #ffffff;
+}
+
 input[type="text"]:focus {
   outline: none;
   border-color: var(--ctp-blue);
@@ -228,6 +305,21 @@ select {
   transition: all 0.3s ease;
 }
 
+[data-theme="guic"] select {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  color: #ffffff;
+}
+
+[data-theme="guic"] select:focus {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  color: #ffffff;
+}
+
 select:focus {
   outline: none;
   border-color: var(--ctp-blue);
@@ -237,6 +329,12 @@ select:focus {
 select option {
   background-color: var(--ctp-surface0);
   color: var(--ctp-text);
+  padding: 8px;
+}
+
+[data-theme="guic"] select option {
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #ffffff;
   padding: 8px;
 }
 
@@ -254,6 +352,22 @@ button {
   display: flex;
   align-items: center;
   gap: 8px;
+}
+
+[data-theme="guic"] button {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="guic"] button:hover {
+  background: rgba(255, 255, 255, 0.35);
+  transform: translateY(-1px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+  border-color: rgba(255, 255, 255, 0.6);
 }
 
 button:hover {
@@ -316,6 +430,13 @@ button:active {
   font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
   font-size: 13px;
   line-height: 1.4;
+}
+
+[data-theme="guic"] #log {
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
 }
 
 progress {
