@@ -404,6 +404,64 @@
   --ctp-rosewater: #4a90e2;
 }
 
+:root[data-theme="alhe"] {
+  --ctp-base: #1a0f05;
+  --ctp-mantle: #2a1a0a;
+  --ctp-crust: #0f0a03;
+  --ctp-surface0: #3a2515;
+  --ctp-surface1: #4a3020;
+  --ctp-surface2: #5a3b2b;
+  --ctp-overlay0: #6a4636;
+  --ctp-overlay1: #7a5141;
+  --ctp-overlay2: #8a5c4c;
+  --ctp-subtext0: #cc9966;
+  --ctp-subtext1: #eeaa77;
+  --ctp-text: #ffffff;
+  --ctp-lavender: #ff8c00;
+  --ctp-blue: #000000;
+  --ctp-sapphire: #ff8c00;
+  --ctp-sky: #000000;
+  --ctp-teal: #ff8c00;
+  --ctp-green: #e07b01;
+  --ctp-yellow: #ff8c00;
+  --ctp-peach: #000000;
+  --ctp-maroon: #ff8c00;
+  --ctp-red: #000000;
+  --ctp-mauve: #ff8c00;
+  --ctp-pink: #000000;
+  --ctp-flamingo: #ff8c00;
+  --ctp-rosewater: #000000;
+}
+
+:root[data-theme="flabio"] {
+  --ctp-base: #1a1a08;
+  --ctp-mantle: #2a2a18;
+  --ctp-crust: #0f0f04;
+  --ctp-surface0: #3a3a28;
+  --ctp-surface1: #4a4a38;
+  --ctp-surface2: #5a5a48;
+  --ctp-overlay0: #6a6a58;
+  --ctp-overlay1: #7a7a68;
+  --ctp-overlay2: #8a8a78;
+  --ctp-subtext0: #cccc88;
+  --ctp-subtext1: #eeee99;
+  --ctp-text: #ffffff;
+  --ctp-lavender: #ffff00;
+  --ctp-blue: #ffffff;
+  --ctp-sapphire: #ffff00;
+  --ctp-sky: #ffffff;
+  --ctp-teal: #ffff00;
+  --ctp-green: #ffffff;
+  --ctp-yellow: #ffff00;
+  --ctp-peach: #ffffff;
+  --ctp-maroon: #ffff00;
+  --ctp-red: #ffffff;
+  --ctp-mauve: #ffff00;
+  --ctp-pink: #ffffff;
+  --ctp-flamingo: #ffff00;
+  --ctp-rosewater: #ffffff;
+}
+
 body {
   font-family: 'JetBrains Mono', 'Fira Code', Consolas, 'Courier New', monospace;
   margin: 24px;
@@ -504,6 +562,24 @@ body {
 
 [data-theme="devs"] body {
   background-image: url('./assets/whale-shark.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  color: #ffffff;
+}
+
+[data-theme="alhe"] body {
+  background-image: url('./assets/hl.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  color: #ffffff;
+}
+
+[data-theme="flabio"] body {
+  background-image: url('./assets/mask.png');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -619,6 +695,26 @@ body {
 [data-theme="devs"] label {
   color: #ffffff;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="alhe"] h1 {
+  color: #ffffff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+[data-theme="alhe"] label {
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+[data-theme="flabio"] h1 {
+  color: #ffffff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+[data-theme="flabio"] label {
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
 }
 
 h1 {
@@ -744,6 +840,18 @@ h1 {
   color: #ffffff;
 }
 
+[data-theme="alhe"] .settings-content {
+  background-color: rgba(26, 15, 5, 0.95);
+  border: 2px solid #ff8c00;
+  color: #ffffff;
+}
+
+[data-theme="flabio"] .settings-content {
+  background-color: rgba(26, 26, 8, 0.95);
+  border: 2px solid #ffff00;
+  color: #ffffff;
+}
+
 .setting-row {
   display: flex;
   align-items: center;
@@ -818,6 +926,18 @@ h1 {
 [data-theme="devs"] .setting-row label {
   color: #ffffff;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  font-weight: 500;
+}
+
+[data-theme="alhe"] .setting-row label {
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  font-weight: 500;
+}
+
+[data-theme="flabio"] .setting-row label {
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
   font-weight: 500;
 }
 
@@ -998,6 +1118,28 @@ input[type="text"] {
   color: #ffffff;
 }
 
+[data-theme="alhe"] input[type="text"] {
+  background-color: rgba(26, 15, 5, 0.8);
+  border: 2px solid #ff8c00;
+  color: #ffffff;
+}
+
+[data-theme="alhe"] input[type="text"]:focus {
+  border-color: #000000;
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="flabio"] input[type="text"] {
+  background-color: rgba(26, 26, 8, 0.8);
+  border: 2px solid #ffff00;
+  color: #ffffff;
+}
+
+[data-theme="flabio"] input[type="text"]:focus {
+  border-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
+}
+
 input[type="text"]:focus {
   outline: none;
   border-color: var(--ctp-blue);
@@ -1150,6 +1292,28 @@ select {
   color: #ffffff;
 }
 
+[data-theme="alhe"] select {
+  background-color: rgba(26, 15, 5, 0.8);
+  border: 2px solid #ff8c00;
+  color: #ffffff;
+}
+
+[data-theme="alhe"] select:focus {
+  border-color: #000000;
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="flabio"] select {
+  background-color: rgba(26, 26, 8, 0.8);
+  border: 2px solid #ffff00;
+  color: #ffffff;
+}
+
+[data-theme="flabio"] select:focus {
+  border-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
+}
+
 select:focus {
   outline: none;
   border-color: var(--ctp-blue);
@@ -1224,6 +1388,18 @@ select option {
 
 [data-theme="devs"] select option {
   background-color: rgba(0, 51, 102, 0.8);
+  color: #ffffff;
+  padding: 8px;
+}
+
+[data-theme="alhe"] select option {
+  background-color: #1a0f05;
+  color: #ffffff;
+  padding: 8px;
+}
+
+[data-theme="flabio"] select option {
+  background-color: #1a1a08;
   color: #ffffff;
   padding: 8px;
 }
@@ -1402,6 +1578,34 @@ button {
   border-color: rgba(51, 153, 255, 0.6);
 }
 
+[data-theme="alhe"] button {
+  background-color: #ff8c00;
+  border: 2px solid #ff8c00;
+  color: #ffffff;
+  text-shadow: none;
+}
+
+[data-theme="alhe"] button:hover {
+  background-color: #000000;
+  border-color: #000000;
+  color: #ff8c00;
+  transform: translateY(-1px);
+}
+
+[data-theme="flabio"] button {
+  background-color: #ffff00;
+  border: 2px solid #ffff00;
+  color: #000000;
+  text-shadow: none;
+}
+
+[data-theme="flabio"] button:hover {
+  background-color: #ffffff;
+  border-color: #ffffff;
+  color: #000000;
+  transform: translateY(-1px);
+}
+
 button:hover {
   background-color: var(--ctp-sapphire);
   transform: translateY(-1px);
@@ -1530,6 +1734,18 @@ button:active {
   backdrop-filter: blur(10px);
   border: 1px solid rgba(51, 153, 255, 0.1);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="alhe"] #log {
+  background-color: rgba(26, 15, 5, 0.9);
+  border: 2px solid #ff8c00;
+  color: #ffffff;
+}
+
+[data-theme="flabio"] #log {
+  background-color: rgba(26, 26, 8, 0.9);
+  border: 2px solid #ffff00;
+  color: #ffffff;
 }
 
 progress {
