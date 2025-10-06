@@ -1,7 +1,12 @@
 name: build-win
 on:
   push:
-    tags: ["v*.*.*"] 
+    tags: ["v*.*.*"]   
+  release:
+    types: [published] 
+
+permissions:
+  contents: write
 
 jobs:
   win:
@@ -13,7 +18,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20  
+          node-version: 20
 
       - name: Install deps (clean)
         run: npm ci
@@ -27,11 +32,7 @@ jobs:
           npx png-to-ico assets/logo-soumnt.png > build/icon.ico
 
       - name: Package Windows
-        run: |
-          npx electron-packager . "Soumnt" --platform=win32 --arch=x64 --out=dist --overwrite ^
-            --icon=build/icon.ico ^
-            --asar ^
-            --asar.unpackDir=resources/bin
+        run: npx electron-packager . "Soumnt" --platform=win32 --arch=x64 --out=dist --overwrite --icon=build/icon.ico --asar --asar.unpackDir=resources/bin
 
       - name: Zip Windows folder
         run: Compress-Archive -Path dist\Soumnt-win32-x64\* -DestinationPath dist\Soumnt-win-x64.zip
