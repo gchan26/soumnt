@@ -26,10 +26,10 @@ jobs:
       - name: Install packager + icon tool
         run: npm i -D electron-packager png-to-ico
 
-      - name: Create ICO from PNG
-        run: |
-          mkdir build
-          npx png-to-ico assets/logo-soumnt.png > build/icon.ico
+    - name: Create ICO from PNG
+      run: |
+        mkdir build -Force
+        npx png-to-ico assets/logo-soumnt.png > build/icon.ico
 
       - name: Package Windows
         run: npx electron-packager . "Soumnt" --platform=win32 --arch=x64 --out=dist --overwrite --icon=build/icon.ico --asar --asar.unpackDir=resources/bin
