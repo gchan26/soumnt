@@ -1,9 +1,38 @@
 const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const path = require('path');
 const { spawn } = require('child_process');
+const fs = require('fs');
 const isDev = require('electron-is-dev');
 
 let win;
+
+function platformDir() {
+  if (process.platform === 'win32') return 'win';
+  if (process.platform === 'darwin') return 'mac';
+  return 'linux'; // Ainda não há suporte para Linux
+}
+
+function resourcesBase() {
+  return app.isPackaged
+    ? process.resourcesPath
+    : path.join(__dirname, 'resources');
+}
+
+function binPath(file) {
+  return path.join(resourcesBase(), 'bin', platformDir(), file);
+}
+
+function resolveYtDlp() {
+  const name = process.platform === 'win32' ? 'yt-dlp.exe' : 'yt-dlp';
+  const full = binPath(name);
+  return fs.existsSync(full) ? full : name;
+}
+
+function resolveFfmpeg() {
+  const name = process.platform === 'win32' ? 'ffmpeg.exe' : 'ffmpeg';
+  const full = binPath(name);
+  return fs.existsSync(full) ? full : name;
+}
 
 function createWindow() {
   win = new BrowserWindow({
@@ -31,10 +60,6 @@ app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit();
 });
 
-function ytDlpBin() {
-  return process.platform === 'win32' ? 'yt-dlp.exe' : 'yt-dlp';
-}
-
 ipcMain.handle('choose-folder', async () => {
   const { canceled, filePaths } = await dialog.showOpenDialog(win, {
     properties: ['openDirectory', 'createDirectory']
@@ -44,21 +69,32 @@ ipcMain.handle('choose-folder', async () => {
 
 ipcMain.handle('start-download', async (event, payload) => {
   const { url, outDir, format } = payload;
-  const ytdlp = ytDlpBin();
+
+  const ytdlp = resolveYtDlp();
+  const ffmpeg = resolveFfmpeg();
+  const ffmpegDir = path.dirname(ffmpeg);
 
   return new Promise((resolve, reject) => {
     try {
       const outputTemplate = '%(title)s - %(id)s.%(ext)s';
+
       const args = [
         url,
         '--newline',
         '-o', path.join(outDir, outputTemplate),
         '--merge-output-format', 'mp4',
-        '--no-progress'
+        '--no-progress',
+        '--ffmpeg-location', ffmpegDir
       ];
       if (format && format.trim()) args.push('-f', format.trim());
 
-      const proc = spawn(ytdlp, args, { windowsHide: true });
+      const proc = spawn(ytdlp, args, {
+        windowsHide: true,
+        env: {
+          ...process.env,
+          PATH: `${ffmpegDir}${path.delimiter}${process.env.PATH || ''}`
+        }
+      });
 
       proc.stdout.setEncoding('utf8');
       proc.stderr.setEncoding('utf8');

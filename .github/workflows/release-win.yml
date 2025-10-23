@@ -1,9 +1,9 @@
 name: build-win
 on:
   push:
-    tags: ["v*.*.*"]   
+    tags: ["v*.*.*"]
   release:
-    types: [published] 
+    types: [published]
 
 permissions:
   contents: write
@@ -28,11 +28,37 @@ jobs:
 
       - name: Create ICO from PNG
         run: |
-          mkdir build
+          if (!(Test-Path build)) { New-Item -ItemType Directory -Path build | Out-Null }
           npx png-to-ico assets/logo-soumnt.png > build/icon.ico
 
+      - name: Prepare external binaries (yt-dlp & ffmpeg)
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+
+          # pastas de destino:
+          $winDir = "resources/bin/win"
+          New-Item -ItemType Directory -Force -Path $winDir | Out-Null
+
+          # yt-dlp.exe (release oficial)
+          $ytdlpUrl = "https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp.exe"
+          Invoke-WebRequest $ytdlpUrl -OutFile "$winDir/yt-dlp.exe"
+
+          # ffmpeg (build essentials do gyan.dev)
+          $ffUrl = "https://www.gyan.dev/ffmpeg/builds/ffmpeg-release-essentials.zip"
+          $zip = "ffmpeg.zip"
+          Invoke-WebRequest $ffUrl -OutFile $zip
+          Expand-Archive -Path $zip -DestinationPath "ffmpeg" -Force
+          $ffExe = Get-ChildItem -Path "ffmpeg" -Recurse -Filter ffmpeg.exe | Select-Object -First 1
+          Copy-Item $ffExe.FullName "$winDir/ffmpeg.exe" -Force
+
       - name: Package Windows
-        run: npx electron-packager . "Soumnt" --platform=win32 --arch=x64 --out=dist --overwrite --icon=build/icon.ico --asar --asar.unpackDir=resources/bin
+        run: >
+          npx electron-packager . "Soumnt"
+          --platform=win32 --arch=x64
+          --out=dist --overwrite
+          --icon=build/icon.ico
+          --asar --asar.unpackDir=resources/bin
 
       - name: Zip Windows folder
         run: Compress-Archive -Path dist\Soumnt-win32-x64\* -DestinationPath dist\Soumnt-win-x64.zip
