@@ -30,51 +30,62 @@ function binPath(file) {
 
 function resolveYtDlp() {
   const name = process.platform === 'win32' ? 'yt-dlp.exe' : 'yt-dlp';
-  const full = binPath(name);
   
-  console.log('App packaged:', app.isPackaged);
-  console.log('Resources base:', resourcesBase());
-  console.log('Looking for yt-dlp at:', full);
-  console.log('File exists:', fs.existsSync(full));
+  const possiblePaths = [
+    binPath(name),
+    path.join(__dirname, 'resources', 'bin', platformDir(), name),
+    path.join(__dirname, '..', 'Resources', 'resources', 'bin', platformDir(), name),
+    path.join(__dirname, '..', 'resources', 'bin', platformDir(), name),
+    path.join(process.resourcesPath || '', 'resources', 'bin', platformDir(), name),
+    path.join(process.resourcesPath || '', 'bin', platformDir(), name)
+  ];
   
-  if (fs.existsSync(full)) {
-    try {
-      fs.accessSync(full, fs.constants.F_OK | fs.constants.X_OK);
-      console.log('Using bundled yt-dlp:', full);
-      return full;
-    } catch (e) {
-      console.log('Permission error, trying to fix:', e.message);
-      if (process.platform !== 'win32') {
-        try {
-          fs.chmodSync(full, 0o755);
-          console.log('Fixed permissions for:', full);
-          return full;
-        } catch (chmodErr) {
-          console.warn('Could not set executable permissions:', chmodErr);
+  for (const fullPath of possiblePaths) {
+    if (fs.existsSync(fullPath)) {
+      try {
+        fs.accessSync(fullPath, fs.constants.F_OK | fs.constants.X_OK);
+        return fullPath;
+      } catch (e) {
+        if (process.platform !== 'win32') {
+          try {
+            fs.chmodSync(fullPath, 0o755);
+            return fullPath;
+          } catch (chmodErr) {
+            continue;
+          }
         }
       }
     }
   }
   
-  console.log('Falling back to system yt-dlp');
   return name;
 }
 
 function resolveFfmpeg() {
   const name = process.platform === 'win32' ? 'ffmpeg.exe' : 'ffmpeg';
-  const full = binPath(name);
   
-  if (fs.existsSync(full)) {
-    try {
-      fs.accessSync(full, fs.constants.F_OK | fs.constants.X_OK);
-      return full;
-    } catch (e) {
-      if (process.platform !== 'win32') {
-        try {
-          fs.chmodSync(full, 0o755);
-          return full;
-        } catch (chmodErr) {
-          console.warn('Could not set executable permissions:', chmodErr);
+  const possiblePaths = [
+    binPath(name),
+    path.join(__dirname, 'resources', 'bin', platformDir(), name),
+    path.join(__dirname, '..', 'Resources', 'resources', 'bin', platformDir(), name),
+    path.join(__dirname, '..', 'resources', 'bin', platformDir(), name),
+    path.join(process.resourcesPath || '', 'resources', 'bin', platformDir(), name),
+    path.join(process.resourcesPath || '', 'bin', platformDir(), name)
+  ];
+  
+  for (const fullPath of possiblePaths) {
+    if (fs.existsSync(fullPath)) {
+      try {
+        fs.accessSync(fullPath, fs.constants.F_OK | fs.constants.X_OK);
+        return fullPath;
+      } catch (e) {
+        if (process.platform !== 'win32') {
+          try {
+            fs.chmodSync(fullPath, 0o755);
+            return fullPath;
+          } catch (chmodErr) {
+            continue;
+          }
         }
       }
     }
