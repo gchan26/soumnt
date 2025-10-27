@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron .",
-    "build": "electron-packager . soumnt --platform=darwin --arch=x64 --out=dist --overwrite",
-    "build-all": "electron-packager . soumnt --platform=all --arch=x64 --out=dist --overwrite"
+    "build": "electron-packager . soumnt --platform=darwin --arch=x64 --out=dist --overwrite --extra-resource=resources",
+    "build-all": "electron-packager . soumnt --platform=all --arch=x64 --out=dist --overwrite --extra-resource=resources"
   },
   "keywords": [],
   "author": "",

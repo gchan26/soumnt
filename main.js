@@ -15,9 +15,11 @@ function platformDir() {
 function resourcesBase() {
   if (app.isPackaged) {
     if (process.platform === 'darwin') {
-      return path.join(process.resourcesPath, '..', 'Resources');
+      return path.join(__dirname, '..', 'Resources');
+    } else if (process.platform === 'win32') {
+      return path.join(__dirname, '..', 'resources');
     }
-    return process.resourcesPath;
+    return path.join(__dirname, '..', 'resources');
   }
   return path.join(__dirname, 'resources');
 }
@@ -30,14 +32,22 @@ function resolveYtDlp() {
   const name = process.platform === 'win32' ? 'yt-dlp.exe' : 'yt-dlp';
   const full = binPath(name);
   
+  console.log('App packaged:', app.isPackaged);
+  console.log('Resources base:', resourcesBase());
+  console.log('Looking for yt-dlp at:', full);
+  console.log('File exists:', fs.existsSync(full));
+  
   if (fs.existsSync(full)) {
     try {
       fs.accessSync(full, fs.constants.F_OK | fs.constants.X_OK);
+      console.log('Using bundled yt-dlp:', full);
       return full;
     } catch (e) {
+      console.log('Permission error, trying to fix:', e.message);
       if (process.platform !== 'win32') {
         try {
           fs.chmodSync(full, 0o755);
+          console.log('Fixed permissions for:', full);
           return full;
         } catch (chmodErr) {
           console.warn('Could not set executable permissions:', chmodErr);
@@ -46,6 +56,7 @@ function resolveYtDlp() {
     }
   }
   
+  console.log('Falling back to system yt-dlp');
   return name;
 }
 
