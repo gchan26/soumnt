@@ -462,6 +462,64 @@
   --ctp-rosewater: #ffffff;
 }
 
+:root[data-theme="beto"] {
+  --ctp-base: #0a1a0a;
+  --ctp-mantle: #152a15;
+  --ctp-crust: #050f05;
+  --ctp-surface0: #1a3a1a;
+  --ctp-surface1: #254a25;
+  --ctp-surface2: #305a30;
+  --ctp-overlay0: #356a35;
+  --ctp-overlay1: #407a40;
+  --ctp-overlay2: #458a45;
+  --ctp-subtext0: #99cc99;
+  --ctp-subtext1: #bbeeaa;
+  --ctp-text: #ffffff;
+  --ctp-lavender: #228b22;
+  --ctp-blue: #000000;
+  --ctp-sapphire: #32cd32;
+  --ctp-sky: #228b22;
+  --ctp-teal: #000000;
+  --ctp-green: #32cd32;
+  --ctp-yellow: #228b22;
+  --ctp-peach: #000000;
+  --ctp-maroon: #32cd32;
+  --ctp-red: #228b22;
+  --ctp-mauve: #000000;
+  --ctp-pink: #32cd32;
+  --ctp-flamingo: #228b22;
+  --ctp-rosewater: #000000;
+}
+
+:root[data-theme="betodog"] {
+  --ctp-base: #1a1515;
+  --ctp-mantle: #2a2020;
+  --ctp-crust: #0f0a0a;
+  --ctp-surface0: #3a2f2f;
+  --ctp-surface1: #4a3f3f;
+  --ctp-surface2: #5a4f4f;
+  --ctp-overlay0: #6a5f5f;
+  --ctp-overlay1: #7a6f6f;
+  --ctp-overlay2: #8a7f7f;
+  --ctp-subtext0: #cc9999;
+  --ctp-subtext1: #eeaaaa;
+  --ctp-text: #ffffff;
+  --ctp-lavender: #8b4513;
+  --ctp-blue: #d2691e;
+  --ctp-sapphire: #cd853f;
+  --ctp-sky: #daa520;
+  --ctp-teal: #b8860b;
+  --ctp-green: #8b4513;
+  --ctp-yellow: #daa520;
+  --ctp-peach: #cd853f;
+  --ctp-maroon: #d2691e;
+  --ctp-red: #b8860b;
+  --ctp-mauve: #8b4513;
+  --ctp-pink: #daa520;
+  --ctp-flamingo: #cd853f;
+  --ctp-rosewater: #d2691e;
+}
+
 body {
   font-family: 'JetBrains Mono', 'Fira Code', Consolas, 'Courier New', monospace;
   margin: 24px;
@@ -580,6 +638,24 @@ body {
 
 [data-theme="flabio"] body {
   background-image: url('./assets/mask.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  color: #ffffff;
+}
+
+[data-theme="beto"] body {
+  background-image: url('./assets/celtics.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  color: #ffffff;
+}
+
+[data-theme="betodog"] body {
+  background-image: url('./assets/marlon.png');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -713,6 +789,26 @@ body {
 }
 
 [data-theme="flabio"] label {
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+[data-theme="beto"] h1 {
+  color: #ffffff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+[data-theme="beto"] label {
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+[data-theme="betodog"] h1 {
+  color: #ffffff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+[data-theme="betodog"] label {
   color: #ffffff;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
 }
@@ -852,6 +948,18 @@ h1 {
   color: #ffffff;
 }
 
+[data-theme="beto"] .settings-content {
+  background-color: rgba(10, 26, 10, 0.95);
+  border: 2px solid #32cd32;
+  color: #ffffff;
+}
+
+[data-theme="betodog"] .settings-content {
+  background-color: rgba(26, 21, 21, 0.95);
+  border: 2px solid #d2691e;
+  color: #ffffff;
+}
+
 .setting-row {
   display: flex;
   align-items: center;
@@ -936,6 +1044,18 @@ h1 {
 }
 
 [data-theme="flabio"] .setting-row label {
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  font-weight: 500;
+}
+
+[data-theme="beto"] .setting-row label {
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  font-weight: 500;
+}
+
+[data-theme="betodog"] .setting-row label {
   color: #ffffff;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
   font-weight: 500;
@@ -1140,6 +1260,28 @@ input[type="text"] {
   box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
 }
 
+[data-theme="beto"] input[type="text"] {
+  background: linear-gradient(135deg, rgba(34, 139, 34, 0.8), rgba(0, 0, 0, 0.8));
+  border: 2px solid #32cd32;
+  color: #ffffff;
+}
+
+[data-theme="beto"] input[type="text"]:focus {
+  border-color: #000000;
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="betodog"] input[type="text"] {
+  background-color: rgba(26, 21, 21, 0.8);
+  border: 2px solid #d2691e;
+  color: #ffffff;
+}
+
+[data-theme="betodog"] input[type="text"]:focus {
+  border-color: #daa520;
+  box-shadow: 0 0 0 3px rgba(218, 165, 32, 0.3);
+}
+
 input[type="text"]:focus {
   outline: none;
   border-color: var(--ctp-blue);
@@ -1314,6 +1456,28 @@ select {
   box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
 }
 
+[data-theme="beto"] select {
+  background: linear-gradient(135deg, rgba(34, 139, 34, 0.8), rgba(0, 0, 0, 0.8));
+  border: 2px solid #32cd32;
+  color: #ffffff;
+}
+
+[data-theme="beto"] select:focus {
+  border-color: #000000;
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="betodog"] select {
+  background-color: rgba(26, 21, 21, 0.8);
+  border: 2px solid #d2691e;
+  color: #ffffff;
+}
+
+[data-theme="betodog"] select:focus {
+  border-color: #daa520;
+  box-shadow: 0 0 0 3px rgba(218, 165, 32, 0.3);
+}
+
 select:focus {
   outline: none;
   border-color: var(--ctp-blue);
@@ -1400,6 +1564,18 @@ select option {
 
 [data-theme="flabio"] select option {
   background-color: #1a1a08;
+  color: #ffffff;
+  padding: 8px;
+}
+
+[data-theme="beto"] select option {
+  background-color: #0a1a0a;
+  color: #ffffff;
+  padding: 8px;
+}
+
+[data-theme="betodog"] select option {
+  background-color: #1a1515;
   color: #ffffff;
   padding: 8px;
 }
@@ -1606,6 +1782,34 @@ button {
   transform: translateY(-1px);
 }
 
+[data-theme="beto"] button {
+  background: linear-gradient(135deg, #32cd32, #000000);
+  border: 2px solid #32cd32;
+  color: #ffffff;
+  text-shadow: none;
+}
+
+[data-theme="beto"] button:hover {
+  background: linear-gradient(135deg, #228b22, #32cd32);
+  border-color: #228b22;
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+[data-theme="betodog"] button {
+  background-color: #d2691e;
+  border: 2px solid #d2691e;
+  color: #ffffff;
+  text-shadow: none;
+}
+
+[data-theme="betodog"] button:hover {
+  background-color: #daa520;
+  border-color: #daa520;
+  color: #000000;
+  transform: translateY(-1px);
+}
+
 button:hover {
   background-color: var(--ctp-sapphire);
   transform: translateY(-1px);
@@ -1745,6 +1949,18 @@ button:active {
 [data-theme="flabio"] #log {
   background-color: rgba(26, 26, 8, 0.9);
   border: 2px solid #ffff00;
+  color: #ffffff;
+}
+
+[data-theme="beto"] #log {
+  background-color: rgba(10, 26, 10, 0.9);
+  border: 2px solid #32cd32;
+  color: #ffffff;
+}
+
+[data-theme="betodog"] #log {
+  background-color: rgba(26, 21, 21, 0.9);
+  border: 2px solid #d2691e;
   color: #ffffff;
 }
 
