@@ -13,9 +13,13 @@ function platformDir() {
 }
 
 function resourcesBase() {
-  return app.isPackaged
-    ? process.resourcesPath
-    : path.join(__dirname, 'resources');
+  if (app.isPackaged) {
+    if (process.platform === 'darwin') {
+      return path.join(process.resourcesPath, '..', 'Resources');
+    }
+    return process.resourcesPath;
+  }
+  return path.join(__dirname, 'resources');
 }
 
 function binPath(file) {
@@ -25,13 +29,47 @@ function binPath(file) {
 function resolveYtDlp() {
   const name = process.platform === 'win32' ? 'yt-dlp.exe' : 'yt-dlp';
   const full = binPath(name);
-  return fs.existsSync(full) ? full : name;
+  
+  if (fs.existsSync(full)) {
+    try {
+      fs.accessSync(full, fs.constants.F_OK | fs.constants.X_OK);
+      return full;
+    } catch (e) {
+      if (process.platform !== 'win32') {
+        try {
+          fs.chmodSync(full, 0o755);
+          return full;
+        } catch (chmodErr) {
+          console.warn('Could not set executable permissions:', chmodErr);
+        }
+      }
+    }
+  }
+  
+  return name;
 }
 
 function resolveFfmpeg() {
   const name = process.platform === 'win32' ? 'ffmpeg.exe' : 'ffmpeg';
   const full = binPath(name);
-  return fs.existsSync(full) ? full : name;
+  
+  if (fs.existsSync(full)) {
+    try {
+      fs.accessSync(full, fs.constants.F_OK | fs.constants.X_OK);
+      return full;
+    } catch (e) {
+      if (process.platform !== 'win32') {
+        try {
+          fs.chmodSync(full, 0o755);
+          return full;
+        } catch (chmodErr) {
+          console.warn('Could not set executable permissions:', chmodErr);
+        }
+      }
+    }
+  }
+  
+  return name;
 }
 
 function createWindow() {
@@ -41,12 +79,15 @@ function createWindow() {
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       contextIsolation: true,
-      nodeIntegration: false
+      nodeIntegration: false,
+      devTools: isDev
     }
   });
 
   win.loadFile('index.html');
-  if (isDev) win.webContents.openDevTools({ mode: 'detach' });
+  if (isDev) {
+    win.webContents.openDevTools({ mode: 'detach' });
+  }
 }
 
 app.whenReady().then(() => {
@@ -96,25 +137,57 @@ ipcMain.handle('start-download', async (event, payload) => {
         }
       });
 
+      proc.on('error', (err) => {
+        if (err.code === 'ENOENT') {
+          reject(new Error(`Executável não encontrado: ${ytdlp}. Verifique se o yt-dlp está instalado e no PATH do sistema.`));
+        } else {
+          reject(err);
+        }
+      });
+
       proc.stdout.setEncoding('utf8');
       proc.stderr.setEncoding('utf8');
 
       proc.stdout.on('data', (data) => {
         event.sender.send('download-log', data);
-        const m = data.match(/\[download\]\s+(\d+(?:\.\d+)?)%/);
-        if (m) event.sender.send('download-progress', Number(m[1]));
+        
+        const progressMatch = data.match(/\[download\]\s+(\d+(?:\.\d+)?)%/);
+        if (progressMatch) {
+          event.sender.send('download-progress', Number(progressMatch[1]));
+        } else if (data.includes('[youtube]') && data.includes('Extracting URL')) {
+          event.sender.send('download-progress', 5);
+        } else if (data.includes('[youtube]') && data.includes('Downloading webpage')) {
+          event.sender.send('download-progress', 10);
+        } else if (data.includes('[youtube]') && data.includes('Downloading player')) {
+          event.sender.send('download-progress', 15);
+        } else if (data.includes('[info]') && data.includes('Downloading')) {
+          event.sender.send('download-progress', 20);
+        } else if (data.includes('[download] Destination:')) {
+          event.sender.send('download-progress', 25);
+        } else if (data.includes('[download] Download completed')) {
+          event.sender.send('download-progress', 85);
+        } else if (data.includes('[Merger]')) {
+          event.sender.send('download-progress', 90);
+        }
       });
 
       proc.stderr.on('data', (data) => {
         event.sender.send('download-log', data);
+        
+        if (data.includes('WARNING:') && data.includes('Signature extraction failed')) {
+          event.sender.send('download-progress', 18);
+        }
       });
 
       proc.on('close', (code) => {
-        if (code === 0) resolve({ ok: true });
-        else reject(new Error('yt-dlp saiu com código ' + code));
+        if (code === 0) {
+          event.sender.send('download-progress', 100);
+          resolve({ ok: true });
+        } else {
+          reject(new Error('yt-dlp saiu com código ' + code));
+        }
       });
 
-      proc.on('error', (err) => reject(err));
     } catch (err) {
       reject(err);
     }
