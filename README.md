@@ -1,4 +1,4 @@
-# 🕒 Soumnt! — "Só um minuto..."
+# 🕒 Soumnt!: "Só um minuto..."
 
 <p align="center">
   <img src="assets/logo-soumnt.png" alt="Soumnt Logo" width="128"/>
